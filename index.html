@@ -1,0 +1,79 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#101010">
+  <title>3301 — Recruitment</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <main id="terminal">
+    <header class="topbar">
+      <span>3301 // RECRUITMENT</span>
+      <span class="status"><i></i> SYSTEM ONLINE</span>
+    </header>
+
+    <section class="intro">
+      <div class="symbol">3301</div>
+      <h1>We are looking for you.</h1>
+      <p>
+        Greetings. We are looking for highly intelligent individuals.
+        To find them, we have devised a test.
+      </p>
+    </section>
+
+    <div class="separator"></div>
+
+    <section id="game">
+      <div class="progress-info">
+        <span id="stage">CHALLENGE 01 / 05</span>
+        <span id="percentage">0% COMPLETE</span>
+      </div>
+
+      <div class="progress-track">
+        <div id="progress-fill"></div>
+      </div>
+
+      <div class="challenge-tag">CURRENT CHALLENGE</div>
+
+      <h2 id="question-title">The beginning.</h2>
+      <p id="question-text">
+        Your first test awaits. Observe carefully.
+      </p>
+
+      <form id="answer-form">
+        <label for="answer">ENTER YOUR ANSWER</label>
+        <input
+          id="answer"
+          type="text"
+          placeholder="Type your answer..."
+          autocomplete="off"
+          required
+        >
+        <button type="submit">SUBMIT ANSWER →</button>
+      </form>
+
+      <p id="feedback" aria-live="polite"></p>
+    </section>
+
+    <section id="completed" hidden>
+      <div class="success-symbol">✓</div>
+      <h2>ACCESS GRANTED.</h2>
+      <p>
+        You have successfully completed the recruitment test.
+        Your presence has been acknowledged.
+      </p>
+      <p class="final-message">WELCOME, CANDIDATE.</p>
+    </section>
+
+    <footer>
+      CICADA 3301 · WE SEEK THE TRUTH
+    </footer>
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>
