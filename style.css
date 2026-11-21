@@ -1,289 +1,326 @@
 
-/* =================================
-   CICADA 3301 — TERMINAL INTERFACE
-================================= */
+/* ==================================
+   CICADA 3301
+   RECRUITMENT SYSTEM
+================================== */
 
-:root {
-  --background: #101010;
-  --surface: #151515;
-  --text: #dedede;
-  --muted: #858585;
-  --border: #383838;
-  --success: #a9c69b;
-  --error: #c77d7d;
-}
+(function () {
 
-* {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
-}
+  "use strict";
 
-body {
-  min-height: 100vh;
-  background: var(--background);
-  color: var(--text);
-  font-family: "Courier New", monospace;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 30px 16px;
-}
+  const STORAGE_KEY = "cicada3301_progress_v2";
 
-/* TERMINAL */
+  // ==================================
+  // CHALLENGES
+  // ==================================
 
-#terminal {
-  width: 100%;
-  max-width: 680px;
-  padding: 28px;
-  border: 1px solid var(--border);
-  background: var(--surface);
-  animation: appear 1s ease;
-}
+  const puzzles = [
 
-/* HEADER */
+    {
+      title: "The first observation.",
+      text:
+`Look beyond the sentence.
+Observe what begins each line.
+Only the first matters.
+Keep what you find.`,
 
-.topbar {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  gap: 12px;
-  font-size: 10px;
-  letter-spacing: 1px;
-  color: var(--muted);
-}
+      answers: ["LOOK"]
+    },
 
-.status {
-  color: #a4a4a4;
-}
+    {
+      title: "The Caesar.",
+      text:
+`A message was intercepted.
 
-.status i {
-  display: inline-block;
-  width: 6px;
-  height: 6px;
-  background: var(--success);
-  border-radius: 50%;
-  margin-right: 5px;
-  box-shadow: 0 0 8px var(--success);
-}
+WKH WUXWK LV KLGGHQ
 
-/* INTRODUCTION */
+The Roman emperor left a clue.
+Shift the letters backwards.
 
-.intro {
-  padding: 65px 0 35px;
-}
+What is the hidden word?`,
 
-.symbol {
-  font-size: 18px;
-  letter-spacing: 12px;
-  color: #888;
-  margin-bottom: 25px;
-}
+      answers: ["TRUTH"]
+    },
 
-h1 {
-  font-size: clamp(26px, 5vw, 39px);
-  font-weight: 400;
-  line-height: 1.2;
-  color: #eee;
-  margin-bottom: 20px;
-}
+    {
+      title: "The pattern.",
+      text:
+`Numbers follow rules.
 
-.intro p {
-  max-width: 480px;
-  color: #999;
-  font-size: 13px;
-  line-height: 1.9;
-}
+2 — 3 — 5 — 7 — 11 — ?
 
-/* DIVIDER */
+There is a pattern.
+Find the next number.`,
 
-.separator {
-  width: 100%;
-  height: 1px;
-  background: var(--border);
-  margin-bottom: 28px;
-}
+      answers: ["13", "THIRTEEN"]
+    },
 
-/* PROGRESS */
+    {
+      title: "The reflection.",
+      text:
+`Sometimes the answer is
+not where you expect it.
 
-.progress-info {
-  display: flex;
-  justify-content: space-between;
-  gap: 10px;
-  font-size: 10px;
-  letter-spacing: 1px;
-  color: var(--muted);
-  margin-bottom: 12px;
-}
+RORRIM
 
-.progress-track {
-  height: 3px;
-  width: 100%;
-  background: #303030;
-  margin-bottom: 38px;
-}
+Read what you see
+from the opposite direction.`,
 
-#progress-fill {
-  width: 0%;
-  height: 100%;
-  background: #dedede;
-  transition: width .5s ease;
-}
+      answers: ["MIRROR"]
+    },
 
-/* CHALLENGE */
+    {
+      title: "The final question.",
+      text:
+`You have observed.
+You have deciphered.
+You have discovered the pattern.
 
-.challenge-tag {
-  font-size: 10px;
-  letter-spacing: 2px;
-  color: var(--muted);
-  margin-bottom: 16px;
-}
+One number has accompanied
+this entire investigation.
 
-h2 {
-  font-size: 23px;
-  font-weight: 400;
-  color: #eee;
-  margin-bottom: 15px;
-}
+What is it?`,
 
-#question-text,
-#completed p {
-  color: #aaa;
-  font-size: 13px;
-  line-height: 1.9;
-  white-space: pre-line;
-}
+      answers: ["3301"]
+    }
 
-/* ANSWER FORM */
+  ];
 
-#answer-form {
-  margin-top: 32px;
-}
+  // ==================================
+  // ELEMENTS
+  // ==================================
 
-#answer-form label {
-  display: block;
-  color: #999;
-  font-size: 10px;
-  letter-spacing: 1.5px;
-  margin-bottom: 12px;
-}
+  const welcome = document.getElementById("welcome");
+  const game = document.getElementById("game");
+  const completed = document.getElementById("completed");
 
-#answer {
-  width: 100%;
-  padding: 16px;
-  background: #101010;
-  border: 1px solid #484848;
-  color: #eee;
-  outline: none;
-  border-radius: 0;
-  font-family: inherit;
-  font-size: 14px;
-  transition: border .2s;
-}
+  const beginButton = document.getElementById("begin-button");
 
-#answer:focus {
-  border-color: #ddd;
-}
+  const stage = document.getElementById("stage");
+  const percentage = document.getElementById("percentage");
+  const progressFill = document.getElementById("progress-fill");
 
-#answer::placeholder {
-  color: #666;
-}
+  const questionTitle = document.getElementById("question-title");
+  const questionText = document.getElementById("question-text");
 
-#answer-form button {
-  width: 100%;
-  padding: 16px;
-  margin-top: 12px;
-  border: none;
-  background: #dedede;
-  color: #111;
-  font-family: inherit;
-  font-size: 11px;
-  letter-spacing: 1px;
-  cursor: pointer;
-  transition: background .2s;
-}
+  const form = document.getElementById("answer-form");
+  const input = document.getElementById("answer");
+  const feedback = document.getElementById("feedback");
 
-#answer-form button:hover {
-  background: #fff;
-}
+  // ==================================
+  // STATE
+  // ==================================
 
-/* FEEDBACK */
+  let currentStage = loadProgress();
 
-#feedback {
-  min-height: 20px;
-  margin-top: 17px;
-  font-size: 11px;
-  color: var(--error);
-}
+  let started = false;
 
-#feedback.success {
-  color: var(--success);
-}
+  // ==================================
+  // STORAGE
+  // ==================================
 
-/* COMPLETION */
+  function loadProgress() {
 
-.success-symbol {
-  color: var(--success);
-  font-size: 35px;
-  margin-bottom: 22px;
-}
+    try {
 
-.final-message {
-  color: #ddd !important;
-  letter-spacing: 2px;
-  margin-top: 25px;
-}
+      const saved = Number(
+        localStorage.getItem(STORAGE_KEY)
+      );
 
-/* FOOTER */
+      if (
+        Number.isInteger(saved) &&
+        saved >= 0 &&
+        saved <= puzzles.length
+      ) {
+        return saved;
+      }
 
-footer {
-  border-top: 1px solid var(--border);
-  margin-top: 38px;
-  padding-top: 20px;
-  color: #666;
-  text-align: center;
-  font-size: 9px;
-  letter-spacing: 1.5px;
-}
+    } catch (error) {
 
-/* ANIMATION */
+      console.warn("Storage unavailable.");
 
-@keyframes appear {
-  from {
-    opacity: 0;
-    transform: translateY(8px);
+    }
+
+    return 0;
+
   }
 
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
+  function saveProgress() {
 
-/* MOBILE */
+    try {
 
-@media (max-width: 480px) {
-  body {
-    padding: 15px 10px;
-  }
+      localStorage.setItem(
+        STORAGE_KEY,
+        String(currentStage)
+      );
 
-  #terminal {
-    padding: 19px;
-  }
+    } catch (error) {
 
-  .intro {
-    padding: 45px 0 28px;
+      console.warn("Could not save progress.");
+
+    }
+
   }
 
-  .topbar {
-    font-size: 8px;
+  // ==================================
+  // ANSWER NORMALIZATION
+  // ==================================
+
+  function normalize(value) {
+
+    return value
+      .normalize("NFD")
+      .replace(/[\u0300-\u036f]/g, "")
+      .toUpperCase()
+      .trim()
+      .replace(/\s+/g, " ");
+
   }
 
-  h1 {
-    font-size: 28px;
+  function validateAnswer(value, accepted) {
+
+    const submitted = normalize(value);
+
+    return accepted.some(answer =>
+      normalize(answer) === submitted
+    );
+
   }
 
-  .progress-info {
-    font-size: 9px;
+  // ==================================
+  // START
+  // ==================================
+
+  beginButton.addEventListener("click", function () {
+
+    started = true;
+
+    welcome.hidden = true;
+
+    if (currentStage >= puzzles.length) {
+
+      completed.hidden = false;
+
+    } else {
+
+      game.hidden = false;
+      renderChallenge();
+
+    }
+
+  });
+
+  // ==================================
+  // RENDER CHALLENGE
+  // ==================================
+
+  function renderChallenge() {
+
+    if (currentStage >= puzzles.length) {
+
+      game.hidden = true;
+      completed.hidden = false;
+
+      return;
+
+    }
+
+    const puzzle = puzzles[currentStage];
+
+    const total = puzzles.length;
+
+    const progress = Math.round(
+      (currentStage / total) * 100
+    );
+
+    stage.textContent =
+      "CHALLENGE " +
+      String(currentStage + 1).padStart(2, "0") +
+      " / " +
+      String(total).padStart(2, "0");
+
+    percentage.textContent =
+      progress + "% COMPLETE";
+
+    progressFill.style.width =
+      progress + "%";
+
+    questionTitle.textContent = puzzle.title;
+
+    questionText.textContent = puzzle.text;
+
+    input.value = "";
+
+    feedback.textContent = "";
+    feedback.className = "";
+
+    input.focus();
+
   }
-}
+
+  // ==================================
+  // SUBMIT ANSWER
+  // ==================================
+
+  form.addEventListener("submit", function (event) {
+
+    event.preventDefault();
+
+    if (!started || currentStage >= puzzles.length) {
+      return;
+    }
+
+    const puzzle = puzzles[currentStage];
+
+    const answer = input.value;
+
+    if (!answer.trim()) {
+
+      feedback.textContent =
+        "PLEASE ENTER AN ANSWER.";
+
+      return;
+
+    }
+
+    // INCORRECT
+
+    if (!validateAnswer(answer, puzzle.answers)) {
+
+      feedback.textContent =
+        "INCORRECT. THINK AGAIN.";
+
+      feedback.className = "";
+
+      input.select();
+
+      return;
+
+    }
+
+    // CORRECT
+
+    const submitButton = form.querySelector("button");
+
+    submitButton.disabled = true;
+
+    feedback.textContent =
+      "ACCESS GRANTED. NEXT CHALLENGE UNLOCKED.";
+
+    feedback.className = "success";
+
+    currentStage++;
+
+    saveProgress();
+
+    setTimeout(function () {
+
+      submitButton.disabled = false;
+
+      renderChallenge();
+
+    }, 1200);
+
+  });
+
+})();
