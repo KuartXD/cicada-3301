@@ -1,14 +1,8 @@
 
-/* ==================================
-   CICADA 3301
-   ORIGINAL INSPIRED INTERFACE
-================================== */
-
 :root {
-  --background: #000000;
+  --background: #000;
   --text: #f2f2f2;
-  --muted: #a5a5a5;
-  --border: #333333;
+  --muted: #999;
   --success: #a8c99b;
   --error: #c77d7d;
 }
@@ -19,109 +13,91 @@
   padding: 0;
 }
 
-body {
-  min-height: 100vh;
-  background: var(--background);
-  color: var(--text);
-
-  font-family: Arial, Helvetica, sans-serif;
-
-  display: flex;
-  align-items: center;
-  justify-content: center;
-
-  padding: 25px;
+html {
+  min-height: 100%;
+  background: #000;
 }
 
-/* MAIN TERMINAL */
+body {
+  min-height: 100vh;
+  background: #000;
+  color: var(--text);
+  font-family: Arial, Helvetica, sans-serif;
+  padding: 0;
+}
+
+/* TELA PRINCIPAL */
 
 #terminal {
   width: 100%;
-  max-width: 620px;
-  min-height: 500px;
-  padding: 35px 30px;
-
+  min-height: 100vh;
+  max-width: none;
+  padding: clamp(28px, 6.5vw, 60px);
   background: #000;
-  border: 1px solid #222;
-
+  border: none;
   display: flex;
   flex-direction: column;
 }
 
-/* HEADER */
+/* INTRODUÇÃO */
 
-.topbar {
-  display: flex;
-  justify-content: space-between;
-
-  font-family: "Courier New", monospace;
-  font-size: 10px;
-  letter-spacing: 2px;
-
-  color: #777;
+.topbar,
+footer {
+  display: none;
 }
-
-#system-status {
-  color: #aaa;
-}
-
-/* WELCOME */
 
 #welcome {
-  margin: auto 0;
-  padding: 65px 0;
+  width: 100%;
+  max-width: 650px;
+  margin: 0;
+  padding: 0;
 }
 
-.number {
-  font-family: "Courier New", monospace;
-  font-size: 17px;
-  letter-spacing: 8px;
-  color: #aaa;
-  margin-bottom: 30px;
-}
-
-h1 {
-  font-size: clamp(27px, 5vw, 36px);
+.intro-copy p {
+  font-size: clamp(19px, 3.8vw, 30px);
   font-weight: 400;
-  letter-spacing: -1px;
-  line-height: 1.3;
-
-  margin-bottom: 25px;
+  line-height: 1.4;
+  letter-spacing: -0.5px;
+  color: #eee;
+  margin-bottom: 42px;
 }
 
-#welcome p {
-  max-width: 480px;
-
-  font-size: 14px;
-  line-height: 1.9;
-
-  color: #c0c0c0;
-  margin-bottom: 16px;
+.intro-copy .number {
+  margin-top: 4px;
+  margin-bottom: 30px;
+  letter-spacing: 2px;
 }
 
-/* BUTTONS */
+/* BOTÕES */
 
 button {
-  width: 100%;
-  padding: 16px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: auto;
+  min-width: 150px;
+  padding: 15px 30px;
+  margin-top: 15px;
 
-  margin-top: 28px;
+  border: 1px solid #eee;
+  border-radius: 999px;
 
-  border: 1px solid #ddd;
-  background: #fff;
+  background: #eee;
   color: #000;
 
   font-family: Arial, Helvetica, sans-serif;
-  font-size: 12px;
-  font-weight: bold;
-  letter-spacing: 2px;
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 1.5px;
 
   cursor: pointer;
-  transition: .2s;
+  transition: background .2s, color .2s, border-color .2s;
 }
 
 button:hover {
-  background: #ccc;
+  background: #000;
+  color: #fff;
+  border-color: #fff;
 }
 
 button:disabled {
@@ -129,136 +105,114 @@ button:disabled {
   cursor: wait;
 }
 
-/* FOOTER */
-
-.welcome-footer {
-  margin-top: 55px;
-
-  font-family: "Courier New", monospace;
-  font-size: 9px;
-  letter-spacing: 2px;
-
-  color: #666;
-}
-
-footer {
-  padding-top: 20px;
-  border-top: 1px solid #222;
-
-  text-align: center;
-
-  font-family: "Courier New", monospace;
-  font-size: 10px;
-  letter-spacing: 5px;
-
-  color: #555;
-}
-
-/* GAME */
+/* DESAFIOS */
 
 #game {
-  padding: 65px 0;
+  width: 100%;
+  max-width: 650px;
+  padding: 0;
+  margin-top: 20px;
 }
 
 .progress-info {
   display: flex;
   justify-content: space-between;
+  gap: 15px;
 
-  font-family: "Courier New", monospace;
-  font-size: 10px;
+  font-size: 12px;
+  color: var(--muted);
   letter-spacing: 1px;
-
-  color: #999;
 }
 
 .progress-track {
-  height: 2px;
-  background: #333;
-  margin: 15px 0 45px;
+  width: 100%;
+  height: 6px;
+  margin: 18px 0 45px;
+  background: #222;
+  border-radius: 999px;
+  overflow: hidden;
 }
 
 #progress-fill {
-  height: 100%;
   width: 0%;
-  background: #fff;
+  height: 100%;
+  background: #eee;
+  border-radius: 999px;
   transition: width .4s ease;
 }
 
 .challenge-tag {
-  font-family: "Courier New", monospace;
-  font-size: 10px;
-  letter-spacing: 2px;
-
-  color: #777;
-  margin-bottom: 20px;
+  margin-bottom: 18px;
+  color: #888;
+  font-size: 11px;
+  letter-spacing: 1.5px;
 }
 
 h2 {
-  font-size: 25px;
+  margin-bottom: 20px;
+  font-size: clamp(23px, 4vw, 30px);
   font-weight: 400;
   line-height: 1.4;
-
-  margin-bottom: 20px;
 }
 
 #question-text {
   color: #ccc;
-  font-size: 14px;
-  line-height: 2;
-
+  font-size: 17px;
+  line-height: 1.8;
   white-space: pre-line;
 }
 
-/* ANSWER FORM */
+/* CAMPO DE RESPOSTA */
 
 #answer-form {
   margin-top: 35px;
+  max-width: 480px;
 }
 
 #answer-form label {
   display: block;
-
-  font-family: "Courier New", monospace;
-  font-size: 10px;
-  letter-spacing: 2px;
-
-  color: #888;
   margin-bottom: 12px;
+  color: #999;
+  font-size: 11px;
+  letter-spacing: 1.5px;
 }
 
 #answer {
+  display: block;
   width: 100%;
-  padding: 16px;
+  padding: 17px 20px;
 
-  background: #050505;
-  border: 1px solid #555;
+  background: #101010;
+  border: 1px solid #444;
+  border-radius: 999px;
 
   color: #fff;
-
   font-family: Arial, Helvetica, sans-serif;
-  font-size: 14px;
+  font-size: 16px;
 
   outline: none;
-  border-radius: 0;
+  transition: border-color .2s;
 }
 
 #answer:focus {
-  border-color: #fff;
+  border-color: #eee;
 }
 
 #answer::placeholder {
-  color: #666;
+  color: #777;
+}
+
+#answer-form button {
+  width: 100%;
+  margin-top: 15px;
 }
 
 /* FEEDBACK */
 
 #feedback {
-  min-height: 20px;
+  min-height: 22px;
   margin-top: 18px;
-
-  font-family: "Courier New", monospace;
-  font-size: 11px;
-
+  font-size: 13px;
   color: var(--error);
 }
 
@@ -266,59 +220,56 @@ h2 {
   color: var(--success);
 }
 
-/* COMPLETED */
+/* CONCLUSÃO */
 
 #completed {
-  margin: auto 0;
-  padding: 65px 0;
+  width: 100%;
+  max-width: 650px;
+  padding: 0;
+  margin-top: 20px;
+}
+
+#completed .number {
+  margin-bottom: 35px;
+  color: #eee;
+  font-size: 22px;
 }
 
 #completed p {
-  font-size: 14px;
-  line-height: 2;
+  margin-top: 20px;
   color: #bbb;
+  font-size: 17px;
+  line-height: 1.8;
 }
 
 .final-message {
   margin-top: 35px;
-  font-family: "Courier New", monospace;
-  font-size: 11px !important;
-  letter-spacing: 1px;
   color: #eee !important;
+  font-size: 12px !important;
+  letter-spacing: 1px;
 }
 
-/* HIDDEN */
+/* ELEMENTOS OCULTOS */
 
 [hidden] {
   display: none !important;
 }
 
-/* MOBILE */
+/* CELULAR */
 
 @media (max-width: 480px) {
-
-  body {
-    padding: 12px;
-  }
-
   #terminal {
-    padding: 25px 20px;
-    min-height: 460px;
+    padding: 32px 25px;
   }
 
-  #welcome,
+  .intro-copy p {
+    font-size: 20px;
+    line-height: 1.45;
+    margin-bottom: 35px;
+  }
+
   #game,
   #completed {
-    padding-top: 50px;
-    padding-bottom: 50px;
+    margin-top: 10px;
   }
-
-  h1 {
-    font-size: 28px;
-  }
-
-  h2 {
-    font-size: 22px;
-  }
-
 }
