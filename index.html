@@ -4,33 +4,55 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="theme-color" content="#101010">
-  <title>3301 — Recruitment</title>
+  <meta name="theme-color" content="#000000">
+
+  <title>3301</title>
+
   <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
 
   <main id="terminal">
+
     <header class="topbar">
-      <span>3301 // RECRUITMENT</span>
-      <span class="status"><i></i> SYSTEM ONLINE</span>
+      <span>3301</span>
+      <span id="system-status">SYSTEM ONLINE</span>
     </header>
 
-    <section class="intro">
-      <div class="symbol">3301</div>
+    <!-- INTRODUCTION -->
+
+    <section id="welcome">
+
+      <div class="number">3301</div>
+
       <h1>We are looking for you.</h1>
+
       <p>
-        Greetings. We are looking for highly intelligent individuals.
-        To find them, we have devised a test.
+        An invitation has been prepared.
+        Five challenges stand between you and the truth.
       </p>
+
+      <p>
+        Observe carefully. Question everything.
+        Nothing is accidental.
+      </p>
+
+      <button id="begin-button">BEGIN →</button>
+
+      <div class="welcome-footer">
+        RECRUITMENT PROGRAM // 2026
+      </div>
+
     </section>
 
-    <div class="separator"></div>
+    <!-- CHALLENGES -->
 
-    <section id="game">
+    <section id="game" hidden>
+
       <div class="progress-info">
         <span id="stage">CHALLENGE 01 / 05</span>
-        <span id="percentage">0% COMPLETE</span>
+        <span id="percentage">0%</span>
       </div>
 
       <div class="progress-track">
@@ -39,41 +61,62 @@
 
       <div class="challenge-tag">CURRENT CHALLENGE</div>
 
-      <h2 id="question-title">The beginning.</h2>
-      <p id="question-text">
-        Your first test awaits. Observe carefully.
-      </p>
+      <h2 id="question-title"></h2>
+
+      <p id="question-text"></p>
 
       <form id="answer-form">
-        <label for="answer">ENTER YOUR ANSWER</label>
+
+        <label for="answer">YOUR ANSWER</label>
+
         <input
           id="answer"
           type="text"
-          placeholder="Type your answer..."
+          placeholder="Enter your answer"
           autocomplete="off"
           required
         >
-        <button type="submit">SUBMIT ANSWER →</button>
+
+        <button type="submit">
+          SUBMIT →
+        </button>
+
       </form>
 
       <p id="feedback" aria-live="polite"></p>
+
     </section>
 
+    <!-- COMPLETION -->
+
     <section id="completed" hidden>
-      <div class="success-symbol">✓</div>
-      <h2>ACCESS GRANTED.</h2>
+
+      <div class="number">3301</div>
+
+      <h2>Congratulations.</h2>
+
       <p>
-        You have successfully completed the recruitment test.
-        Your presence has been acknowledged.
+        You have completed all five challenges.
+        Your curiosity has brought you this far.
       </p>
-      <p class="final-message">WELCOME, CANDIDATE.</p>
+
+      <p class="final-message">
+        THE INVITATION WAS ONLY THE BEGINNING.
+      </p>
+
+      <div class="welcome-footer">
+        RECRUITMENT PROGRAM // COMPLETE
+      </div>
+
     </section>
 
     <footer>
-      CICADA 3301 · WE SEEK THE TRUTH
+      3301
     </footer>
+
   </main>
 
   <script src="script.js"></script>
+
 </body>
 </html>
