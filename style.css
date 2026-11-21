@@ -1,326 +1,324 @@
 
 /* ==================================
    CICADA 3301
-   RECRUITMENT SYSTEM
+   ORIGINAL INSPIRED INTERFACE
 ================================== */
 
-(function () {
+:root {
+  --background: #000000;
+  --text: #f2f2f2;
+  --muted: #a5a5a5;
+  --border: #333333;
+  --success: #a8c99b;
+  --error: #c77d7d;
+}
 
-  "use strict";
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
 
-  const STORAGE_KEY = "cicada3301_progress_v2";
+body {
+  min-height: 100vh;
+  background: var(--background);
+  color: var(--text);
 
-  // ==================================
-  // CHALLENGES
-  // ==================================
+  font-family: Arial, Helvetica, sans-serif;
 
-  const puzzles = [
+  display: flex;
+  align-items: center;
+  justify-content: center;
 
-    {
-      title: "The first observation.",
-      text:
-`Look beyond the sentence.
-Observe what begins each line.
-Only the first matters.
-Keep what you find.`,
+  padding: 25px;
+}
 
-      answers: ["LOOK"]
-    },
+/* MAIN TERMINAL */
 
-    {
-      title: "The Caesar.",
-      text:
-`A message was intercepted.
+#terminal {
+  width: 100%;
+  max-width: 620px;
+  min-height: 500px;
+  padding: 35px 30px;
 
-WKH WUXWK LV KLGGHQ
+  background: #000;
+  border: 1px solid #222;
 
-The Roman emperor left a clue.
-Shift the letters backwards.
+  display: flex;
+  flex-direction: column;
+}
 
-What is the hidden word?`,
+/* HEADER */
 
-      answers: ["TRUTH"]
-    },
+.topbar {
+  display: flex;
+  justify-content: space-between;
 
-    {
-      title: "The pattern.",
-      text:
-`Numbers follow rules.
+  font-family: "Courier New", monospace;
+  font-size: 10px;
+  letter-spacing: 2px;
 
-2 — 3 — 5 — 7 — 11 — ?
+  color: #777;
+}
 
-There is a pattern.
-Find the next number.`,
+#system-status {
+  color: #aaa;
+}
 
-      answers: ["13", "THIRTEEN"]
-    },
+/* WELCOME */
 
-    {
-      title: "The reflection.",
-      text:
-`Sometimes the answer is
-not where you expect it.
+#welcome {
+  margin: auto 0;
+  padding: 65px 0;
+}
 
-RORRIM
+.number {
+  font-family: "Courier New", monospace;
+  font-size: 17px;
+  letter-spacing: 8px;
+  color: #aaa;
+  margin-bottom: 30px;
+}
 
-Read what you see
-from the opposite direction.`,
+h1 {
+  font-size: clamp(27px, 5vw, 36px);
+  font-weight: 400;
+  letter-spacing: -1px;
+  line-height: 1.3;
 
-      answers: ["MIRROR"]
-    },
+  margin-bottom: 25px;
+}
 
-    {
-      title: "The final question.",
-      text:
-`You have observed.
-You have deciphered.
-You have discovered the pattern.
+#welcome p {
+  max-width: 480px;
 
-One number has accompanied
-this entire investigation.
+  font-size: 14px;
+  line-height: 1.9;
 
-What is it?`,
+  color: #c0c0c0;
+  margin-bottom: 16px;
+}
 
-      answers: ["3301"]
-    }
+/* BUTTONS */
 
-  ];
+button {
+  width: 100%;
+  padding: 16px;
 
-  // ==================================
-  // ELEMENTS
-  // ==================================
+  margin-top: 28px;
 
-  const welcome = document.getElementById("welcome");
-  const game = document.getElementById("game");
-  const completed = document.getElementById("completed");
+  border: 1px solid #ddd;
+  background: #fff;
+  color: #000;
 
-  const beginButton = document.getElementById("begin-button");
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 12px;
+  font-weight: bold;
+  letter-spacing: 2px;
 
-  const stage = document.getElementById("stage");
-  const percentage = document.getElementById("percentage");
-  const progressFill = document.getElementById("progress-fill");
+  cursor: pointer;
+  transition: .2s;
+}
 
-  const questionTitle = document.getElementById("question-title");
-  const questionText = document.getElementById("question-text");
+button:hover {
+  background: #ccc;
+}
 
-  const form = document.getElementById("answer-form");
-  const input = document.getElementById("answer");
-  const feedback = document.getElementById("feedback");
+button:disabled {
+  opacity: .5;
+  cursor: wait;
+}
 
-  // ==================================
-  // STATE
-  // ==================================
+/* FOOTER */
 
-  let currentStage = loadProgress();
+.welcome-footer {
+  margin-top: 55px;
 
-  let started = false;
+  font-family: "Courier New", monospace;
+  font-size: 9px;
+  letter-spacing: 2px;
 
-  // ==================================
-  // STORAGE
-  // ==================================
+  color: #666;
+}
 
-  function loadProgress() {
+footer {
+  padding-top: 20px;
+  border-top: 1px solid #222;
 
-    try {
+  text-align: center;
 
-      const saved = Number(
-        localStorage.getItem(STORAGE_KEY)
-      );
+  font-family: "Courier New", monospace;
+  font-size: 10px;
+  letter-spacing: 5px;
 
-      if (
-        Number.isInteger(saved) &&
-        saved >= 0 &&
-        saved <= puzzles.length
-      ) {
-        return saved;
-      }
+  color: #555;
+}
 
-    } catch (error) {
+/* GAME */
 
-      console.warn("Storage unavailable.");
+#game {
+  padding: 65px 0;
+}
 
-    }
+.progress-info {
+  display: flex;
+  justify-content: space-between;
 
-    return 0;
+  font-family: "Courier New", monospace;
+  font-size: 10px;
+  letter-spacing: 1px;
 
+  color: #999;
+}
+
+.progress-track {
+  height: 2px;
+  background: #333;
+  margin: 15px 0 45px;
+}
+
+#progress-fill {
+  height: 100%;
+  width: 0%;
+  background: #fff;
+  transition: width .4s ease;
+}
+
+.challenge-tag {
+  font-family: "Courier New", monospace;
+  font-size: 10px;
+  letter-spacing: 2px;
+
+  color: #777;
+  margin-bottom: 20px;
+}
+
+h2 {
+  font-size: 25px;
+  font-weight: 400;
+  line-height: 1.4;
+
+  margin-bottom: 20px;
+}
+
+#question-text {
+  color: #ccc;
+  font-size: 14px;
+  line-height: 2;
+
+  white-space: pre-line;
+}
+
+/* ANSWER FORM */
+
+#answer-form {
+  margin-top: 35px;
+}
+
+#answer-form label {
+  display: block;
+
+  font-family: "Courier New", monospace;
+  font-size: 10px;
+  letter-spacing: 2px;
+
+  color: #888;
+  margin-bottom: 12px;
+}
+
+#answer {
+  width: 100%;
+  padding: 16px;
+
+  background: #050505;
+  border: 1px solid #555;
+
+  color: #fff;
+
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 14px;
+
+  outline: none;
+  border-radius: 0;
+}
+
+#answer:focus {
+  border-color: #fff;
+}
+
+#answer::placeholder {
+  color: #666;
+}
+
+/* FEEDBACK */
+
+#feedback {
+  min-height: 20px;
+  margin-top: 18px;
+
+  font-family: "Courier New", monospace;
+  font-size: 11px;
+
+  color: var(--error);
+}
+
+#feedback.success {
+  color: var(--success);
+}
+
+/* COMPLETED */
+
+#completed {
+  margin: auto 0;
+  padding: 65px 0;
+}
+
+#completed p {
+  font-size: 14px;
+  line-height: 2;
+  color: #bbb;
+}
+
+.final-message {
+  margin-top: 35px;
+  font-family: "Courier New", monospace;
+  font-size: 11px !important;
+  letter-spacing: 1px;
+  color: #eee !important;
+}
+
+/* HIDDEN */
+
+[hidden] {
+  display: none !important;
+}
+
+/* MOBILE */
+
+@media (max-width: 480px) {
+
+  body {
+    padding: 12px;
   }
 
-  function saveProgress() {
-
-    try {
-
-      localStorage.setItem(
-        STORAGE_KEY,
-        String(currentStage)
-      );
-
-    } catch (error) {
-
-      console.warn("Could not save progress.");
-
-    }
-
+  #terminal {
+    padding: 25px 20px;
+    min-height: 460px;
   }
 
-  // ==================================
-  // ANSWER NORMALIZATION
-  // ==================================
-
-  function normalize(value) {
-
-    return value
-      .normalize("NFD")
-      .replace(/[\u0300-\u036f]/g, "")
-      .toUpperCase()
-      .trim()
-      .replace(/\s+/g, " ");
-
+  #welcome,
+  #game,
+  #completed {
+    padding-top: 50px;
+    padding-bottom: 50px;
   }
 
-  function validateAnswer(value, accepted) {
-
-    const submitted = normalize(value);
-
-    return accepted.some(answer =>
-      normalize(answer) === submitted
-    );
-
+  h1 {
+    font-size: 28px;
   }
 
-  // ==================================
-  // START
-  // ==================================
-
-  beginButton.addEventListener("click", function () {
-
-    started = true;
-
-    welcome.hidden = true;
-
-    if (currentStage >= puzzles.length) {
-
-      completed.hidden = false;
-
-    } else {
-
-      game.hidden = false;
-      renderChallenge();
-
-    }
-
-  });
-
-  // ==================================
-  // RENDER CHALLENGE
-  // ==================================
-
-  function renderChallenge() {
-
-    if (currentStage >= puzzles.length) {
-
-      game.hidden = true;
-      completed.hidden = false;
-
-      return;
-
-    }
-
-    const puzzle = puzzles[currentStage];
-
-    const total = puzzles.length;
-
-    const progress = Math.round(
-      (currentStage / total) * 100
-    );
-
-    stage.textContent =
-      "CHALLENGE " +
-      String(currentStage + 1).padStart(2, "0") +
-      " / " +
-      String(total).padStart(2, "0");
-
-    percentage.textContent =
-      progress + "% COMPLETE";
-
-    progressFill.style.width =
-      progress + "%";
-
-    questionTitle.textContent = puzzle.title;
-
-    questionText.textContent = puzzle.text;
-
-    input.value = "";
-
-    feedback.textContent = "";
-    feedback.className = "";
-
-    input.focus();
-
+  h2 {
+    font-size: 22px;
   }
 
-  // ==================================
-  // SUBMIT ANSWER
-  // ==================================
-
-  form.addEventListener("submit", function (event) {
-
-    event.preventDefault();
-
-    if (!started || currentStage >= puzzles.length) {
-      return;
-    }
-
-    const puzzle = puzzles[currentStage];
-
-    const answer = input.value;
-
-    if (!answer.trim()) {
-
-      feedback.textContent =
-        "PLEASE ENTER AN ANSWER.";
-
-      return;
-
-    }
-
-    // INCORRECT
-
-    if (!validateAnswer(answer, puzzle.answers)) {
-
-      feedback.textContent =
-        "INCORRECT. THINK AGAIN.";
-
-      feedback.className = "";
-
-      input.select();
-
-      return;
-
-    }
-
-    // CORRECT
-
-    const submitButton = form.querySelector("button");
-
-    submitButton.disabled = true;
-
-    feedback.textContent =
-      "ACCESS GRANTED. NEXT CHALLENGE UNLOCKED.";
-
-    feedback.className = "success";
-
-    currentStage++;
-
-    saveProgress();
-
-    setTimeout(function () {
-
-      submitButton.disabled = false;
-
-      renderChallenge();
-
-    }, 1200);
-
-  });
-
-})();
+}
